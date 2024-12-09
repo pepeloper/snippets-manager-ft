@@ -1,10 +1,14 @@
 import express from 'express';
+import { connectToDatabase } from './database.js';
+
+const PORT = 3000;
 
 const app = express();
 app.use(express.json());
 
-const port = 3000;
+connectToDatabase();
 
-app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
+
