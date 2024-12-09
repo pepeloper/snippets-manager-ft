@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import keys from "./constants.config.js";
 
-const {MONGO_URI} = keys;
+const { MONGO_URI } = keys;
 
 const MONGO_DB_NAME = "snippets_manager";
-const connectionConfig = {dbName: MONGO_DB_NAME};
+const connectionConfig = { dbName: MONGO_DB_NAME };
 
 
 export async function connectToDatabase(){
