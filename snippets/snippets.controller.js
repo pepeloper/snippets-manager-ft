@@ -1,7 +1,8 @@
 import snippetsService from "./snippets.service.js";
 
 export const snippetsController = {
-  index: (req, res) => {
-    res.json(snippetsService.getAll());
+  index: async (req, res) => {
+    const snippets = await snippetsService.getAll()
+    res.json(snippets);
   }
 }
