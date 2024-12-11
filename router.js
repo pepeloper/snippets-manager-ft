@@ -8,7 +8,6 @@ router.get( '/', (req, res) => {
   res.send("Bienvenido a mi API");
 });
 
-
 router.use('/snippets' , snippetsRoutes);
 
 export default router;
