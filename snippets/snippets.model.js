@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const snippetsSchema  = new Schema({
   title: {
@@ -20,8 +20,8 @@ const snippetsSchema  = new Schema({
   author: {
     type: String,
     required: true,
-  }
-})
+  },
+});
 
 const snippetsModel = model('Snippets', snippetsSchema);
 

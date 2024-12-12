@@ -1,4 +1,4 @@
-import snippetsModel from "./snippets.model.js";
+import snippetsModel from './snippets.model.js';
 
 const snippetsRepository = {
   findAll: () => {
@@ -8,7 +8,7 @@ const snippetsRepository = {
   create: async (snippetData) => {
     const snippet = await snippetsModel.create(snippetData);
     return snippet;
-  }
-}
+  },
+};
 
 export default snippetsRepository;
