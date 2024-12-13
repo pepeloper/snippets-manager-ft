@@ -1,7 +1,7 @@
 import snippetsRepository from './snippets.repository.js';
 
 const  validateSnippetFields = (snippetData) => {
-  const requiredFields = ['title', 'content', 'category', 'author',];
+  const requiredFields = ['title', 'content', 'category', 'author'];
 
   for (const field of requiredFields) {
     if (!snippetData[field]) {

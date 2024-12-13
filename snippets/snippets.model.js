@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-const snippetsSchema  = new Schema({
+const snippetsSchema = new Schema({
   title: {
     type: String,
     required: true,
