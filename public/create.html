@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Snippet - Gestor de Snippets</title>
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/prism.css">
+</head>
+<body>
+    <div class="create-layout">
+        <header class="create-header">
+            <div class="header-content">
+                <img src="/img/logo.png" alt="Logo">
+                <a href="/" class="back-link">← Volver a la Lista</a>
+            </div>
+        </header>
+
+        <main class="create-content">
+            <form id="create-form" class="create-form">
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Descripción</label>
+                    <input type="text" id="description" name="description">
+                </div>
+
+                <div class="form-group">
+                    <label for="language">Lenguaje</label>
+                    <select id="language" name="language" required>
+                        <option value="nodejs">Node.js</option>
+                        <option value="javascript">JavaScript</option>
+                        <option value="html">HTML</option>
+                        <option value="css">CSS</option>
+                        <option value="express">Express</option>
+                        <option value="npm">NPM</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="code">Código</label>
+                    <textarea id="code" name="code" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-button">Crear Snippet</button>
+                    <a href="/" class="cancel-button">Cancelar</a>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="/js/prism.js"></script>
+    <script src="/js/create.js"></script>
+</body>
+</html>
