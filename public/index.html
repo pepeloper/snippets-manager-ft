@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Snippets</title>
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/prism.css">
+</head>
+
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="/images/logo.png" alt="Logo">
+        <a href="/create.html" class="create-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </a>
+      </div>
+      <div class="filter-container">
+        <select id="language-filter" class="filter-select">
+          <option value="">Todos los Lenguajes</option>
+          <option value="nodejs">Node.js</option>
+          <option value="javascript">JavaScript</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="express">Express</option>
+          <option value="npm">NPM</option>
+        </select>
+      </div>
+      <div class="snippets-list" id="snippets-list">
+        <!-- La lista de snippets se insertará aquí -->
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div id="snippet-content">
+        <!-- El snippet seleccionado o estado vacío se mostrará aquí -->
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/prism.js"></script>
+</body>
+
+</html>
