@@ -1,8 +1,8 @@
-import snippetsService from "./snippets.service.js";
+import snippetsService from './snippets.service.js';
 
 export const snippetsController = {
   index: async (req, res) => {
-    const snippets = await snippetsService.getAll()
+    const snippets = await snippetsService.getAll();
     res.json(snippets);
   },
   create: async (req, res) => {
@@ -12,5 +12,5 @@ export const snippetsController = {
     } catch (error) {
       res.status(422).json({ error: error.message });
     }
-  }
-}
+  },
+};
