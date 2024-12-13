@@ -13,4 +13,12 @@ export const snippetsController = {
       res.status(422).json({ error: error.message });
     }
   },
+  update: async (req, res) => {
+    try {
+      const snippet = await snippetsService.update(req.params.id, req.body);
+      res.json(snippet);
+    } catch (error) {
+      res.status(404).json({ error: error.message })
+    }
+  },
 };
