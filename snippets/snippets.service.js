@@ -21,6 +21,15 @@ const snippetsService = {
     const snippet = snippetsRepository.create(snippetData);
     return snippet;
   },
+  update: async (id, snippetData) => {
+    validateSnippetFields(snippetData);
+
+    const snippet = await snippetsRepository.update(id, snippetData);
+    if (!snippet) {
+      throw new Error('Id not found.');
+    }
+    return snippet;
+  },
 };
 
 export default snippetsService;

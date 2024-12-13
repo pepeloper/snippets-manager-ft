@@ -9,6 +9,13 @@ const snippetsRepository = {
     const snippet = await snippetsModel.create(snippetData);
     return snippet;
   },
+  update: async (id, snippetData) => {
+    const filter = { _id: id }
+    const snippet = await snippetsModel.findOneAndUpdate(filter, snippetData, {
+      new: true
+    });
+    return snippet;
+  },
 };
 
 export default snippetsRepository;
