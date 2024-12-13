@@ -1,14 +1,14 @@
-import snippetsRepository from "./snippets.repository.js";
+import snippetsRepository from './snippets.repository.js';
 
 const  validateSnippetFields = (snippetData) => {
-  const requiredFields = ["title", "content", "category", "author"];
+  const requiredFields = ['title', 'content', 'category', 'author'];
 
   for (const field of requiredFields) {
     if (!snippetData[field]) {
-      throw new Error("Missing required field");
+      throw new Error('Missing required field');
     }
   }
-}
+};
 
 const snippetsService = {
   getAll: () => {
@@ -20,7 +20,7 @@ const snippetsService = {
 
     const snippet = snippetsRepository.create(snippetData);
     return snippet;
-  }
-}
+  },
+};
 
 export default snippetsService;
