@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express from 'express';
 import { connectToDatabase } from './database.js';
 import router from './router.js';
