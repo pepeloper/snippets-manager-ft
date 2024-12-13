@@ -230,7 +230,7 @@ pre code {
 
 .submit-button {
   background-color: var(--yellow);
-  color: var(--gray-100);
+  color: var(--gray-700);
   padding: var(--space-3) var(--space-6);
   border: none;
   border-radius: var(--radius-sm);
@@ -348,4 +348,13 @@ select {
 .filter-select option {
   background: var(--black);
   color: var(--gray-100);
+}
+
+.back-link {
+  color: var(--text-color);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
 }
