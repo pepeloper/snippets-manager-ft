@@ -10,9 +10,9 @@ const snippetsRepository = {
     return snippet;
   },
   update: async (id, snippetData) => {
-    const filter = { _id: id }
+    const filter = { _id: id };
     const snippet = await snippetsModel.findOneAndUpdate(filter, snippetData, {
-      new: true
+      new: true,
     });
     return snippet;
   },

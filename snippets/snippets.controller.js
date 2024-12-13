@@ -18,7 +18,7 @@ export const snippetsController = {
       const snippet = await snippetsService.update(req.params.id, req.body);
       res.json(snippet);
     } catch (error) {
-      res.status(404).json({ error: error.message })
+      res.status(404).json({ error: error.message });
     }
   },
 };

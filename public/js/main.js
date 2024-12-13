@@ -1,4 +1,4 @@
-const BASE_URL ='http://localhost:3000';
+const BASE_URL = 'https://snippets-manager-ft.onrender.com/api';
 let snippets = null;
 
 async function getSnippets(){
@@ -25,8 +25,8 @@ function createSnippetListItem(snippet, isActive = false) {
 }
 
 function renderSnippets (snippets){
-  const snippetList = document.querySelector(".snippets-list");
-  const list = snippets.map(snippet => createSnippetListItem(snippet));
+  const snippetList = document.querySelector('.snippets-list');
+  const list = snippets.map((snippet) => createSnippetListItem(snippet));
   snippetList.innerHTML = list.join('');
 }
 
