@@ -1,5 +1,6 @@
 const BASE_URL = 'https://snippets-manager-ft.onrender.com/api';
 let snippets = null;
+let selectedSnippet = null;
 
 async function getSnippets(){
   const response = await fetch(`${BASE_URL}/snippets`);
@@ -9,7 +10,7 @@ async function getSnippets(){
 function createSnippetListItem(snippet, isActive = false) {
   return `
       <div class="snippet-item ${isActive ? 'active' : ''}"
-           data-id="${snippet.id}"
+           data-id="${snippet._id}"
            tabindex="0"
            role="button"
            aria-selected="${isActive}">
@@ -24,10 +25,25 @@ function createSnippetListItem(snippet, isActive = false) {
   `;
 }
 
-function renderSnippets (snippets){
+function renderSnippets() {
   const snippetList = document.querySelector('.snippets-list');
-  const list = snippets.map((snippet) => createSnippetListItem(snippet));
+  const list = snippets.map((snippet) => {
+    const isActive = snippet._id === selectedSnippet?._id;
+    return createSnippetListItem(snippet, isActive);
+  });
   snippetList.innerHTML = list.join('');
+  selectSnippets();
+}
+
+function selectSnippets() {
+  const snippetElements = document.querySelectorAll('.snippet-item');
+
+  snippetElements.forEach((snippet) => {
+    snippet.addEventListener('click', () => {
+      selectedSnippet = snippets.find((s) => s._id === snippet.dataset.id);
+      renderSnippets();
+    });
+  });
 }
 
 async function main() {
