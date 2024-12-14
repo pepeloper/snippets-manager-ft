@@ -1,7 +1,12 @@
 import { compareSync, hashSync } from 'bcrypt';
 import userRepository from '../users/user.repository.js';
+import jwt from 'jsonwebtoken';
+import keys from './constants.config.js';
 
-const generateToken = (username) => `${username}Token`;
+const generateToken = (email) => {
+  const token = jwt.sign({ email }, keys.JWT_PRIVATE_KEY);
+  return token;
+};
 
 const validateUserFields = (userData) => {
   const requiredFields = ['email', 'password', 'username'];
@@ -20,10 +25,10 @@ const authService = {
 
       const hashedPassword = hashSync(userData.password, 10);
       userData.password = hashedPassword;
-      userData.token = generateToken(userData.username);
       const user = await userRepository.create(userData);
+      const token = generateToken(user.email);
 
-      return { user };
+      return { user, token };
     } catch (error) {
       if (error.code === 11000) {
         throw new Error('Email y/o usuario ya registrado.');
@@ -42,7 +47,9 @@ const authService = {
       throw new Error('Password dont match');
     }
 
-    return user;
+    const token = generateToken(user.email);
+
+    return { user, token };
   },
 };
 

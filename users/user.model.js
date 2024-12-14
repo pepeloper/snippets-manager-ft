@@ -15,10 +15,6 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  token: {
-    type: String,
-    required: false,
-  },
 });
 
 const userModel = model('User', userSchema);
