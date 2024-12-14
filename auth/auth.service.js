@@ -15,14 +15,20 @@ const validateUserFields = (userData) => {
 
 const authService = {
   register: async (userData) => {
-    validateUserFields(userData);
+    try {
+      validateUserFields(userData);
 
-    const hashedPassword = hashSync(userData.password, 10);
-    userData.password = hashedPassword;
-    userData.token = generateToken(userData.username);
-    const user = await userRepository.create(userData);
+      const hashedPassword = hashSync(userData.password, 10);
+      userData.password = hashedPassword;
+      userData.token = generateToken(userData.username);
+      const user = await userRepository.create(userData);
 
-    return { user };
+      return { user };
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new Error('Email y/o usuario ya registrado.');
+      }
+    }
   },
   login: async (email, password) => {
     const user = await userRepository.getByEmail(email);
