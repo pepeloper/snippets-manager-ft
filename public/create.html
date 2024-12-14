@@ -13,13 +13,13 @@
     <div class="create-layout">
         <header class="create-header">
             <div class="header-content">
-                <img src="/img/logo.png" alt="Logo">
+                <img src="/images/logo.png" alt="Logo">
                 <a href="/" class="back-link">← Volver a la Lista</a>
             </div>
         </header>
 
         <main class="create-content">
-            <form id="create-form" class="create-form">
+            <form class="create-form">
                 <div class="form-group">
                     <label for="title">Título</label>
                     <input type="text" id="title" name="title" required>
@@ -46,6 +46,17 @@
                     <label for="code">Código</label>
                     <textarea id="code" name="code" required></textarea>
                 </div>
+
+                <div class="form-group">
+                  <label for="author">Autor</label>
+                  <select id="author" name="author" required>
+                      <option value="Miguel">Miguel</option>
+                      <option value="Cristian">Cristian</option>
+                      <option value="Larry">Larry</option>
+                      <option value="Pepe">Pepe</option>
+                      <option value="Jona">Jona</option>
+                  </select>
+              </div>
 
                 <div class="form-actions">
                     <button type="submit" class="submit-button">Crear Snippet</button>
