@@ -18,11 +18,11 @@ export const authController = {
       const user = await authService.login(req.body.email, req.body.password);
       res.json(user);
     } catch (error) {
-      if (error.message === 'No user found with this email') {
+      if (error.message === 'No se encontró un usuario con este email') {
         return res.status(404).json({ error: error.message });
       }
 
-      if (error.message === 'Password dont match') {
+      if (error.message === 'La contraseña no coincide') {
         return res.status(403).json({ error: error.message });
       }
 
