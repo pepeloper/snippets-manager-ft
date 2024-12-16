@@ -1,7 +1,7 @@
 import { compareSync, hashSync } from 'bcrypt';
 import userRepository from '../users/user.repository.js';
 import jwt from 'jsonwebtoken';
-import keys from './constants.config.js';
+import keys from '../constants.config.js';
 
 const generateToken = (email) => {
   const token = jwt.sign({ email }, keys.JWT_PRIVATE_KEY);
