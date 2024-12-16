@@ -13,7 +13,7 @@ const validateUserFields = (userData) => {
 
   for (const field of requiredFields) {
     if (!userData[field]) {
-      throw new Error('Missing required field');
+      throw new Error('Debes completar todos los campos');
     }
   }
 };
@@ -39,12 +39,12 @@ const authService = {
     const user = await userRepository.getByEmail(email);
 
     if (!user) {
-      throw new Error('No user found with this email');
+      throw new Error('No se encontró un usuario con este email');
     }
 
     const isSamePassword = compareSync(password, user.password);
     if (!isSamePassword) {
-      throw new Error('Password dont match');
+      throw new Error('La contraseña no coincide');
     }
 
     const token = generateToken(user.email);

@@ -7,34 +7,40 @@ const unauthorized = (res) => {
 };
 
 function middleware(req, res, next) {
-  const publicRoutes = [
-    '/api',
-    '/api/auth/login',
-    '/api/auth/register',
-  ];
+  if (req.path.startsWith('/api')) {
+    const publicPaths = ['/api', '/api/auth/login', '/api/auth/register'];
 
-  const isPublic = publicRoutes.some((route) => route === req.url);
+    const isPublic = publicPaths.some(
+      (path) => req.path === path || req.path.startsWith(path)
+    );
 
-  if(isPublic) {
-    next();
-    return;
-  }
-  const authHeader =  req.headers.authorization;
-  const token = authHeader.split(' ')[1];
-
-  if(!token) {
-    unauthorized(res);
-    return;
-  }
-  jwt.verify(token, keys.JWT_PRIVATE_KEY, async (error, payload) => {
-    if(error) {
-      unauthorized(res);
-      return;
+    if (isPublic) {
+      return next();
     }
-    const user = await userService.getByEmail(payload.email);
-    req.user = user;
+
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return unauthorized(res);
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    if (!token) {
+      return unauthorized(res);
+    }
+
+    jwt.verify(token, keys.JWT_PRIVATE_KEY, async (error, payload) => {
+      if (error) {
+        return unauthorized(res);
+      }
+      const user = await userService.getByEmail(payload.email);
+      req.user = user;
+      return next();
+    });
+  } else {
     return next();
-  });
+  }
 }
 
 export default middleware;

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Snippets</title>
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+  <div class="auth-layout">
+    <div class="auth-image">
+      <div class="auth-image-overlay"></div>
+      <h2 class="auth-tagline">Guarda tus snippets.<br>Comparte tu código.</h2>
+    </div>
+
+    <div class="auth-content">
+      <div class="auth-header">
+        <img src="/images/logo.png" alt="Logo" class="auth-logo">
+        <h1 class="auth-title">Iniciar sesión</h1>
+        <p class="auth-subtitle">
+          No tienes una cuenta? <a href="/register.html">Registrate</a>
+        </p>
+      </div>
+
+      <form class="auth-form">
+        <div class="auth-alert" id="error-message"></div>
+        <div class="auth-form-group">
+          <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+        </div>
+        <div class="auth-form-group">
+          <input type="password" id="password" name="password" placeholder="Contraseña" required>
+        </div>
+
+        <button type="submit" class="auth-button">Iniciar sesión</button>
+      </form>
+    </div>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>
