@@ -384,9 +384,3 @@ select {
   height: 24px;
   border-radius: 100%;
 }
-
-.copy-text {
-  position: absolute;
-  left: -9999px;
-  top: -9999px;
-}

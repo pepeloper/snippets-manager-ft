@@ -80,14 +80,10 @@ function createSnippetView(snippet) {
               <p class="snippet-description">${snippet.description}</p>
           </div>
           <div class="code-wrapper">
-              <button class="copy-button" onclick="copySnippetCode(this, ${JSON.stringify(
-    snippet.content
-  )})">
+              <button class="copy-button" data-snippet="${encodeURIComponent(snippet.content)}">
                   <span class="copy-text">Copiar</span>
               </button>
-              <pre><code class="language-${snippet.category === 'nodejs' ? 'javascript' : snippet.category}">${escapeHtml(
-  snippet.content
-)}</code></pre>
+              <pre><code class="language-${snippet.category === 'nodejs' ? 'javascript' : snippet.category}">${escapeHtml(snippet.content)}</code></pre>
           </div>
           <div class="snippet-author">
               <img class="snippet-author-img" src="/images/${snippet.author.toLowerCase()}.png" alt="${snippet.author}">
@@ -95,6 +91,17 @@ function createSnippetView(snippet) {
           </div>
       </div>
   `;
+}
+
+function copySnippetCode(button) {
+  const snippetContent = decodeURIComponent(button.dataset.snippet);
+  navigator.clipboard.writeText(snippetContent).then(() => {
+    const copyText = button.querySelector('.copy-text');
+    copyText.textContent = '¡Copiado!';
+    setTimeout(() => {
+      copyText.textContent = 'Copiar';
+    }, 2000);
+  });
 }
 
 function createEmptyState() {
@@ -133,6 +140,12 @@ function renderSnippets() {
     : createEmptyState();
 
   selectSnippets();
+
+  const copyButton = document.querySelector('.copy-button');
+  if (copyButton) {
+    copyButton.addEventListener('click', (e) => copySnippetCode(e.target.closest('.copy-button')));
+  }
+
   Prism.highlightAll();
 }
 
@@ -159,29 +172,5 @@ async function main() {
   const filterSelect = document.getElementById('language-filter');
   filterSelect.addEventListener('change', (e) => filterSnippets(e.target.value));
 }
-
-async function copySnippetCode(button, code) {
-  try {
-    await navigator.clipboard.writeText(code);
-
-    button.classList.add('copied');
-    const textSpan = button.querySelector('.copy-text');
-    textSpan.textContent = '¡Copiado!';
-
-    setTimeout(() => {
-      button.classList.remove('copied');
-      textSpan.textContent = 'Copiar';
-    }, 2000);
-  } catch {
-    const textSpan = button.querySelector('.copy-text');
-    textSpan.textContent = 'Error al copiar';
-    setTimeout(() => {
-      textSpan.textContent = 'Copiar';
-    }, 2000);
-  }
-}
-
-// Make the function available globally
-window.copySnippetCode = copySnippetCode;
 
 main();
