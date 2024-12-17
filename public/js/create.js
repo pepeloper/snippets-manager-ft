@@ -1,3 +1,8 @@
+const auth = checkAuth();
+if (!auth) {
+  window.location.href = '/login.html';
+}
+
 document.querySelector('.create-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -14,6 +19,7 @@ document.querySelector('.create-form').addEventListener('submit', async (e) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${auth.token}`,
       },
       body: JSON.stringify(formData),
     });

@@ -7,6 +7,20 @@ if (!auth) {
 const BASE_URL = 'https://snippets-manager-ft.onrender.com/api';
 let snippets = null;
 let selectedSnippet = null;
+let filteredSnippets = null;
+
+const categoryMapper = {
+  nodejs: 'Node.js',
+  javascript: 'JavaScript',
+  html: 'HTML',
+  css: 'CSS',
+  express: 'Express',
+  npm: 'NPM',
+};
+
+function formatCategory(category) {
+  return categoryMapper[category.toLowerCase()] || category;
+}
 
 function escapeHtml(unsafe) {
   return unsafe
@@ -43,13 +57,11 @@ function createSnippetListItem(snippet, isActive = false) {
            role="button"
            aria-selected="${isActive}">
           <div class="snippet-item-title-wrapper">
-              <img class="snippet-item-author-img" src="/images/${snippet.author.toLowerCase()}.png" alt="${
-  snippet.author
-}">
+              <img class="snippet-item-author-img" src="/images/${snippet.author.toLowerCase()}.png" alt="${snippet.author}">
               <p class="snippet-item-title">${snippet.title}</p>
           </div>
           <div class="snippet-item-meta">
-              <span class="snippet-item-language">${snippet.category}</span>
+              <span class="snippet-item-language">${formatCategory(snippet.category)}</span>
           </div>
       </div>
   `;
@@ -61,7 +73,7 @@ function createSnippetView(snippet) {
           <div class="snippet-header">
               <h2 class="snippet-title">${snippet.title}</h2>
               <div class="snippet-meta">
-                  <span class="language-tag">${snippet.category}</span>
+                  <span class="language-tag">${formatCategory(snippet.category)}</span>
               </div>
           </div>
           <div class="snippet-description-wrapper">
@@ -73,9 +85,13 @@ function createSnippetView(snippet) {
   )})">
                   <span class="copy-text">Copiar</span>
               </button>
-              <pre><code class="language-${snippet.category}">${escapeHtml(
+              <pre><code class="language-${snippet.category === 'nodejs' ? 'javascript' : snippet.category}">${escapeHtml(
   snippet.content
 )}</code></pre>
+          </div>
+          <div class="snippet-author">
+              <img class="snippet-author-img" src="/images/${snippet.author.toLowerCase()}.png" alt="${snippet.author}">
+              <span>${snippet.author}</span>
           </div>
       </div>
   `;
@@ -91,10 +107,22 @@ function createEmptyState() {
   `;
 }
 
+function filterSnippets(category) {
+  if (!category) {
+    filteredSnippets = snippets;
+  } else {
+    filteredSnippets = snippets.filter((snippet) =>
+      snippet.category.toLowerCase() === category.toLowerCase()
+    );
+  }
+  selectedSnippet = null;
+  renderSnippets();
+}
+
 function renderSnippets() {
   const snippetList = document.querySelector('.snippets-list');
   const contentContainer = document.getElementById('snippet-content');
-  const list = snippets.map((snippet) => {
+  const list = filteredSnippets.map((snippet) => {
     const isActive = snippet._id === selectedSnippet?._id;
     return createSnippetListItem(snippet, isActive);
   });
@@ -105,7 +133,6 @@ function renderSnippets() {
     : createEmptyState();
 
   selectSnippets();
-
   Prism.highlightAll();
 }
 
@@ -114,7 +141,11 @@ function selectSnippets() {
 
   snippetElements.forEach((snippet) => {
     snippet.addEventListener('click', () => {
-      selectedSnippet = snippets.find((s) => s._id === snippet.dataset.id);
+      if (selectedSnippet?._id === snippet.dataset.id) {
+        selectedSnippet = null;
+      } else {
+        selectedSnippet = snippets.find((s) => s._id === snippet.dataset.id);
+      }
       renderSnippets();
     });
   });
@@ -122,7 +153,11 @@ function selectSnippets() {
 
 async function main() {
   await getSnippets();
-  renderSnippets(snippets);
+  filteredSnippets = snippets;
+  renderSnippets();
+
+  const filterSelect = document.getElementById('language-filter');
+  filterSelect.addEventListener('change', (e) => filterSnippets(e.target.value));
 }
 
 async function copySnippetCode(button, code) {
