@@ -1,9 +1,25 @@
+import { checkAuth } from './auth.js';
+
+const auth = checkAuth();
+if (!auth) {
+  window.location.href = '/login.html';
+}
+
 const BASE_URL = 'https://snippets-manager-ft.onrender.com/api';
 let snippets = null;
 let selectedSnippet = null;
 
-async function getSnippets(){
+async function getSnippets() {
   const response = await fetch(`${BASE_URL}/snippets`);
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      window.location.href = '/login.html';
+      return;
+    }
+    throw new Error('Error fetching snippets');
+  }
+
   snippets = await response.json();
 }
 

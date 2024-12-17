@@ -7,12 +7,10 @@ const unauthorized = (res) => {
 };
 
 function middleware(req, res, next) {
-  if (req.path.startsWith('/api')) {
+  if (req.url.startsWith('/api')) {
     const publicPaths = ['/api', '/api/auth/login', '/api/auth/register'];
 
-    const isPublic = publicPaths.some(
-      (path) => req.path === path || req.path.startsWith(path)
-    );
+    const isPublic = publicPaths.some((route) => req.path === route);
 
     if (isPublic) {
       return next();
