@@ -81,7 +81,7 @@ function createSnippetView(snippet) {
           </div>
           <div class="code-wrapper">
               <button class="copy-button" onclick="copySnippetCode(this, ${JSON.stringify(
-    snippet.code
+    snippet.content
   )})">
                   <span class="copy-text">Copiar</span>
               </button>
