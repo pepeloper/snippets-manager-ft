@@ -1,6 +1,5 @@
-import { checkAuth } from './auth.js';
-
 const auth = checkAuth();
+
 if (!auth) {
   window.location.href = '/login.html';
 }
@@ -9,8 +8,21 @@ const BASE_URL = 'https://snippets-manager-ft.onrender.com/api';
 let snippets = null;
 let selectedSnippet = null;
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 async function getSnippets() {
-  const response = await fetch(`${BASE_URL}/snippets`);
+  const response = await fetch(`${BASE_URL}/snippets`, {
+    headers: {
+      Authorization: `Bearer ${auth.token}`,
+    },
+  });
 
   if (!response.ok) {
     if (response.status === 401) {
@@ -31,7 +43,9 @@ function createSnippetListItem(snippet, isActive = false) {
            role="button"
            aria-selected="${isActive}">
           <div class="snippet-item-title-wrapper">
-              <img class="snippet-item-author-img" src="/images/${snippet.author.toLowerCase()}.png" alt="${snippet.author}">
+              <img class="snippet-item-author-img" src="/images/${snippet.author.toLowerCase()}.png" alt="${
+  snippet.author
+}">
               <p class="snippet-item-title">${snippet.title}</p>
           </div>
           <div class="snippet-item-meta">
@@ -41,14 +55,58 @@ function createSnippetListItem(snippet, isActive = false) {
   `;
 }
 
+function createSnippetView(snippet) {
+  return `
+      <div class="snippet-view">
+          <div class="snippet-header">
+              <h2 class="snippet-title">${snippet.title}</h2>
+              <div class="snippet-meta">
+                  <span class="language-tag">${snippet.category}</span>
+              </div>
+          </div>
+          <div class="snippet-description-wrapper">
+              <p class="snippet-description">${snippet.description}</p>
+          </div>
+          <div class="code-wrapper">
+              <button class="copy-button" onclick="copySnippetCode(this, ${JSON.stringify(
+    snippet.code
+  )})">
+                  <span class="copy-text">Copiar</span>
+              </button>
+              <pre><code class="language-${snippet.category}">${escapeHtml(
+  snippet.content
+)}</code></pre>
+          </div>
+      </div>
+  `;
+}
+
+function createEmptyState() {
+  return `
+      <div class="empty-state">
+          <div class="empty-state-icon">📝</div>
+          <h2>Ningún Snippet Seleccionado</h2>
+          <p>Selecciona un snippet de la barra lateral o crea uno nuevo</p>
+      </div>
+  `;
+}
+
 function renderSnippets() {
   const snippetList = document.querySelector('.snippets-list');
+  const contentContainer = document.getElementById('snippet-content');
   const list = snippets.map((snippet) => {
     const isActive = snippet._id === selectedSnippet?._id;
     return createSnippetListItem(snippet, isActive);
   });
   snippetList.innerHTML = list.join('');
+
+  contentContainer.innerHTML = selectedSnippet
+    ? createSnippetView(selectedSnippet)
+    : createEmptyState();
+
   selectSnippets();
+
+  Prism.highlightAll();
 }
 
 function selectSnippets() {
@@ -66,5 +124,29 @@ async function main() {
   await getSnippets();
   renderSnippets(snippets);
 }
+
+async function copySnippetCode(button, code) {
+  try {
+    await navigator.clipboard.writeText(code);
+
+    button.classList.add('copied');
+    const textSpan = button.querySelector('.copy-text');
+    textSpan.textContent = '¡Copiado!';
+
+    setTimeout(() => {
+      button.classList.remove('copied');
+      textSpan.textContent = 'Copiar';
+    }, 2000);
+  } catch {
+    const textSpan = button.querySelector('.copy-text');
+    textSpan.textContent = 'Error al copiar';
+    setTimeout(() => {
+      textSpan.textContent = 'Copiar';
+    }, 2000);
+  }
+}
+
+// Make the function available globally
+window.copySnippetCode = copySnippetCode;
 
 main();

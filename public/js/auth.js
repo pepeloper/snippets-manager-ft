@@ -1,4 +1,4 @@
-function checkAuth() {
+window.checkAuth = function() {
   const token = localStorage.getItem('token');
   const user = localStorage.getItem('user');
 
@@ -11,6 +11,4 @@ function checkAuth() {
     token,
     user: JSON.parse(user),
   };
-}
-
-export { checkAuth };
+};

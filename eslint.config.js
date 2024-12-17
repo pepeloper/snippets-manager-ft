@@ -10,6 +10,8 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        checkAuth: 'readonly',
+        Prism: 'readonly',
       },
     },
     rules: {
