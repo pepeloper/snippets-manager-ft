@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import { connectToDatabase } from './database.js';
 import router from './router.js';
 import authMiddleware from './middleware/auth.middleware.js';
+
+dotenv.config();
 
 const PORT = 3000;
 
