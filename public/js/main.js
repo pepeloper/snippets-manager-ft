@@ -4,7 +4,6 @@ if (!auth) {
   window.location.href = '/login.html';
 }
 
-const BASE_URL = 'https://snippets-manager-ft.onrender.com/api';
 let snippets = null;
 let selectedSnippet = null;
 let filteredSnippets = null;
@@ -32,7 +31,7 @@ function escapeHtml(unsafe) {
 }
 
 async function getSnippets() {
-  const response = await fetch(`${BASE_URL}/snippets`, {
+  const response = await fetch('/api/snippets', {
     headers: {
       Authorization: `Bearer ${auth.token}`,
     },
