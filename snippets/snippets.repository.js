@@ -16,6 +16,11 @@ const snippetsRepository = {
     });
     return snippet;
   },
+  delete: async (id) => {
+    const filter = { _id: id };
+    const snippet = await snippetsModel.findOneAndDelete(filter);
+    return snippet;
+  },
 };
 
 export default snippetsRepository;

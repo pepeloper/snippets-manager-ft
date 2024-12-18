@@ -21,4 +21,12 @@ export const snippetsController = {
       res.status(404).json({ error: error.message });
     }
   },
+  delete: async (req, res) => {
+    try{
+      await snippetsService.delete(req.params.id);
+      res.json({ deleted: true });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  },
 };

@@ -30,6 +30,13 @@ const snippetsService = {
     }
     return snippet;
   },
+  delete: async (id) => {
+    const snippet = await snippetsRepository.delete(id);
+    if (!snippet) {
+      throw new Error('Id not found.');
+    }
+    return snippet;
+  },
 };
 
 export default snippetsService;
