@@ -1,9 +1,16 @@
 import snippetsService from './snippets.service.js';
+import constants from '../constants.config.js';
 
 export const snippetsController = {
   index: async (req, res) => {
-    const snippets = await snippetsService.getAll();
-    res.json(snippets);
+    try {
+      const { PAGINATION } = constants;
+      const { page = 1, itemsPerPage = PAGINATION.ITEMS_PER_PAGE } = req.query;
+      const snippets = await snippetsService.getAll(page, itemsPerPage);
+      res.json(snippets);
+    } catch (error) {
+      res.status(422).json({ error: error.message });
+    }
   },
   create: async (req, res) => {
     try {
