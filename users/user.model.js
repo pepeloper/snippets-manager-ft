@@ -15,10 +15,6 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  role: {
-    type: String,
-    required: true,
-  },
 });
 
 const userModel = model('User', userSchema);
