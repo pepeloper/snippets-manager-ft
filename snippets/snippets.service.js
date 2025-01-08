@@ -11,8 +11,12 @@ const  validateSnippetFields = (snippetData) => {
 };
 
 const snippetsService = {
-  getAll: () => {
-    const snippets = snippetsRepository.findAll();
+  getAll: (page, itemsPerPage) => {
+    if (page < 0) {
+      throw new Error('Page must not be negative.');
+    }
+    const skip = itemsPerPage * (page - 1);
+    const snippets = snippetsRepository.findAll(itemsPerPage, skip);
     return snippets;
   },
   create: (snippetData) => {
