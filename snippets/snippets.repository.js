@@ -5,6 +5,10 @@ const snippetsRepository = {
     const snippetsList = snippetsModel.find().skip(skip).limit(itemsPerPage).lean();
     return snippetsList;
   },
+  find: async (id) => {
+    const snippet = await snippetsModel.findById(id).lean();
+    return snippet;
+  },
   create: async (snippetData) => {
     const snippet = await snippetsModel.create(snippetData);
     return snippet;

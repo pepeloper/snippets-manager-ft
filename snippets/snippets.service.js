@@ -19,6 +19,10 @@ const snippetsService = {
     const snippets = snippetsRepository.findAll(itemsPerPage, skip);
     return snippets;
   },
+  getById: async (id) => {
+    const snippet = await snippetsRepository.find(id);
+    return snippet;
+  },
   create: (snippetData) => {
     validateSnippetFields(snippetData);
 
