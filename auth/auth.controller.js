@@ -7,9 +7,9 @@ export const authController = {
       res.json(user);
     } catch (error) {
       if(error.message === 'Email y/o usuario ya registrado.'){
-        res.status(409).json({ error: error.message });
+        return res.status(409).json({ error: error.message });
       }
-      res.status(422).json({ error: error.message });
+      return res.status(422).json({ error: error.message });
     }
   },
 

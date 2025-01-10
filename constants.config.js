@@ -5,4 +5,10 @@ export default {
   PAGINATION: {
     ITEMS_PER_PAGE: 10,
   },
+  MAIL: {
+    HOST: process.env.MAIL_HOST,
+    PORT: process.env.MAIL_PORT,
+    USER: process.env.MAIL_USER,
+    PASSWORD: process.env.MAIL_PASSWORD,
+  },
 };

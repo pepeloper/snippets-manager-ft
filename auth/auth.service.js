@@ -2,6 +2,7 @@ import { compareSync, hashSync } from 'bcrypt';
 import userRepository from '../users/user.repository.js';
 import jwt from 'jsonwebtoken';
 import keys from '../constants.config.js';
+import sendEmail from '../emails/emails.service.js';
 
 const generateToken = (email) => {
   const token = jwt.sign({ email }, keys.JWT_PRIVATE_KEY);
@@ -27,6 +28,11 @@ const authService = {
       userData.password = hashedPassword;
       const user = await userRepository.create(userData);
       const token = generateToken(user.email);
+      sendEmail({
+        to: user.email,
+        subject: 'Bienvenido a SnippetManager',
+        body: `Hola, ${user.username}, te damos la bienvenida.`,
+      });
 
       return { user, token };
     } catch (error) {
