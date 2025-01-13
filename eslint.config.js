@@ -10,6 +10,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        ...globals.jest,
         checkAuth: 'readonly',
         Prism: 'readonly',
       },
