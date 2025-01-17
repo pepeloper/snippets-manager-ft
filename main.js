@@ -8,14 +8,18 @@ import authMiddleware from './middleware/auth.middleware.js';
 
 const PORT = 3000;
 
-const app = express();
+export const app = express();
 app.use(express.json());
 app.use(cors({ origin: true }));
 app.use(authMiddleware);
 app.use('/api',router);
 app.use(express.static('public'));
-connectToDatabase();
 
-app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  connectToDatabase();
+  app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+  });
+}
+
+export default app;
